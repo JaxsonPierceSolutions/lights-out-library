@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <img src="/img/hero.jpg" alt="" width="1344" height="768">
+    <div class="top"><button class="theme" type="button"></button></div>
+    <div class="in">
+      <h1 data-layer="name">Lights Out Library</h1>
+      <p class="lede" data-layer="lede">A reference library that works with no internet. Search it, or pick a shelf.</p>
+      <form class="search" action="/search.html" method="get" role="search">
+        <label class="sr" for="q">Search the library</label>
+        <input type="search" id="q" name="q" placeholder="Search the library" autocomplete="off" required>
+        <button class="go">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="chips" aria-label="Common questions">
+    <a class="chip" href="/search.html?q=stop+bleeding&amp;shelf=medical">Stop bleeding</a>
+    <a class="chip" href="/search.html?q=make+water+safe+to+drink&amp;shelf=water">Make water safe</a>
+    <a class="chip" href="/search.html?q=burn+treatment&amp;shelf=medical">Burns</a>
+    <a class="chip" href="/search.html?q=fever&amp;shelf=medical">Fever</a>
+    <a class="chip" href="/search.html?q=food+with+no+power+freezer&amp;shelf=water">Food with no power</a>
+    <a class="chip" href="/search.html?q=generator+will+not+start&amp;shelf=fix">Generator trouble</a>
+  </div>
+
+  <div id="empty"></div>
+
+  <h2>Start here</h2>
+  <div class="start">
+    <a class="card" href="/answers.html"><span class="ic" data-ic="check"></span><span><b>Quick answers</b><small>Short, sourced answers to the questions that matter most</small></span></a>
+    <a class="card" href="/ask.html" id="ask-card" hidden><span class="ic" data-ic="chat"></span><span><b>Ask a question</b><small>A small AI on this computer reads the library and answers, with its sources</small></span></a>
+    <a class="card" href="/books.html" id="books-card"><span class="ic" data-ic="books"></span><span><b>All books</b><small id="books-small">Everything on this computer, by shelf</small></span></a>
+    <a class="card" href="/files.html" id="files-card" hidden><span class="ic" data-ic="folder"></span><span><b>Your own files</b><small>Music, films and documents you added yourself</small></span></a>
+  </div>
+
+  <!--layer:cards-->
+
+  <h2>Shelves</h2>
+  <div class="grid" id="shelves">
+    <a class="tile" href="/search.html?shelf=medical"><span class="pic"><img src="/img/shelf-medical.jpg" alt="" loading="lazy" width="720" height="480"></span><span class="txt"><b>Medical</b><small>First aid, medicines, field medicine</small><span class="n mono" data-n="medical"></span></span></a>
+    <a class="tile" href="/search.html?shelf=water"><span class="pic"><img src="/img/shelf-water.jpg" alt="" loading="lazy" width="720" height="480"></span><span class="txt"><b>Water and food</b><small>Safe water, canning, storage, gardening</small><span class="n mono" data-n="water"></span></span></a>
+    <a class="tile" href="/search.html?shelf=fix"><span class="pic"><img src="/img/shelf-fix.jpg" alt="" loading="lazy" width="720" height="480"></span><span class="txt"><b>Fix it</b><small>Repair guides, cars, electronics, the house</small><span class="n mono" data-n="fix"></span></span></a>
+    <a class="tile" href="/search.html?shelf=survival"><span class="pic"><img src="/img/shelf-survival.jpg" alt="" loading="lazy" width="720" height="480"></span><span class="txt"><b>Survival</b><small>Field manuals, preparedness, off-grid power</small><span class="n mono" data-n="survival"></span></span></a>
+    <a class="tile" href="/skills.html"><span class="pic"><img src="/img/shelf-skills.jpg" alt="" loading="lazy" width="720" height="480"></span><span class="txt"><b>Old-time skills</b><small>How it was done by hand, before electricity</small><span class="n mono" data-n="skills"></span></span></a>
+    <a class="tile" href="/search.html?shelf=reference"><span class="pic"><img src="/img/shelf-reference.jpg" alt="" loading="lazy" width="720" height="480"></span><span class="txt"><b>Reference</b><small>Encyclopedia and textbooks</small><span class="n mono" data-n="reference"></span></span></a>
+  </div>
+
+  <footer>
+    <span><span class="dot" id="dot"></span><span id="state">Checking the book server</span></span>
+    <span>Runs on this computer only. Nothing leaves it.</span>
+    <!--layer:footer-->
+    <a href="/about.html">About, sizes and licenses</a>
+  </footer>
+</div>
+<script src="/js/app.js"></script>
+<script>
+library().then(function (lib) {
+  const state = document.getElementById('state');
+  if (!lib.up) {
+    document.getElementById('dot').className = 'dot down';
+    state.textContent = 'The book server is not running';
+  } else {
+    const total = lib.books.reduce(function (n, b) { return n + b.bytes; }, 0);
+    state.textContent = lib.books.length + (lib.books.length === 1 ? ' book' : ' books') + ' loaded' + (total ? ', ' + gb(total) : '');
+  }
+  if (!lib.books.length) document.getElementById('empty').innerHTML = emptyNotice();
+  document.querySelectorAll('[data-n]').forEach(function (e) {
+    const n = shelfBooks(lib, e.dataset.n).length;
+    e.textContent = n ? n + (n === 1 ? ' book' : ' books') : 'Not loaded';
+    if (!n) e.closest('.tile').classList.add('off');
+  });
+  if (lib.status.ask && lib.status.ask.enabled) document.getElementById('ask-card').hidden = false;
+});
+ownFiles().then(function (dirs) { const c = document.getElementById('files-card'); if (c && dirs.length) c.hidden = false; });
+</script>
+</body>
+</html>

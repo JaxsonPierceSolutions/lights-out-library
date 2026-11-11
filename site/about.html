@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>About · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name">About</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1>About this library</h1>
+    <p class="lede">What it is, what is on this computer, how to add more, and who the books belong to.</p>
+  </header>
+
+  <h2>What it is</h2>
+  <p>A set of reference books and a search page that run on this computer with no internet. The books are downloaded ahead of time from <span class="mono">download.kiwix.org</span>, the official home of the Kiwix offline library. After that, nothing here needs or uses a network. The pages can only be opened from this computer.</p>
+  <p id="have" class="muted">Checking what is loaded…</p>
+
+  <h2>The sets</h2>
+  <p>Each set includes the ones above it. Everything, with the optional AI, stays under <span id="limit">500</span> GB.</p>
+  <div class="scroll"><table id="tiers"><thead><tr><th>Set</th><th>Size</th><th>Books</th><th>What it adds</th></tr></thead><tbody></tbody></table></div>
+  <p class="small muted" style="margin-top:12px">To add a set, run <code>fetch --tier NAME</code> in the project folder while you have internet, then start the library again. <code>fetch --list</code> shows the same table. Sizes were checked on <span id="checked"></span>.</p>
+
+  <h2>Every book, its size and its license</h2>
+  <p>This project ships none of these books. Each person downloads their own copy, and each book stays under its own license. "Not confirmed" means we could not find a clear statement, so do not copy or sell that book.</p>
+  <div class="scroll"><table id="items"><thead><tr><th>Book</th><th>Set</th><th>Size</th><th>License</th><th></th></tr></thead><tbody></tbody></table></div>
+
+  <h2>Left out on purpose</h2>
+  <div id="left"></div>
+
+  <h2 id="ask">Ask (optional AI)</h2>
+  <p>Ask is off unless you turn it on. It uses a small AI model that runs on this computer through a free program called Ollama, which you install yourself. It reads pages from the library and answers from them. It can be wrong, and it is slow on a laptop without a graphics card.</p>
+  <div class="scroll"><table id="models"><thead><tr><th>Model</th><th>Made by</th><th>License</th><th>Size</th><th>Tried here</th></tr></thead><tbody></tbody></table></div>
+  <p class="small muted" style="margin-top:12px">To turn it on: install Ollama, run <code>ollama pull</code> for one model above and for <code id="embed"></code>, then copy <code>config.example.json</code> to <code>config.json</code> and set <code>ask.enabled</code> to true and <code>ask.model</code> to the model's name.</p>
+
+  <h2>Fonts and software</h2>
+  <p class="small muted">Text is set in Geist (SIL Open Font License 1.1). Books are served by kiwix-serve (GPL 3.0 or later), downloaded by the fetch script. The pictures were made for this project.</p>
+</div>
+<script src="/js/app.js"></script>
+<script>
+library().then(function (lib) {
+  const m = lib.manifest;
+  const total = lib.books.reduce(function (n, b) { return n + b.bytes; }, 0);
+  document.getElementById('have').textContent = !lib.up ? 'The book server is not running, so the loaded books cannot be counted.'
+    : lib.books.length ? lib.books.length + (lib.books.length === 1 ? ' book is' : ' books are') + ' on this computer' + (total ? ', taking ' + gb(total) : '') + '.'
+    : 'No books are on this computer yet.';
+  document.getElementById('limit').textContent = m.limit_gb || 500;
+  document.getElementById('checked').textContent = m.checked || '';
+  const tierName = {};
+  let run = 0;
+  document.querySelector('#tiers tbody').innerHTML = (m.tiers || []).map(function (t) {
+    tierName[t.id] = t.name;
+    const mine = m.items.filter(function (i) { return i.tier === t.id; });
+    run += mine.reduce(function (n, i) { return n + i.bytes; }, 0);
+    const count = m.items.filter(function (i) { return i.tier === t.id || t.includes.indexOf(i.tier) >= 0; }).length;
+    return '<tr><td><b>' + esc(t.name) + '</b></td><td class="num mono" data-l="Size">' + gb(run) + '</td><td class="num mono" data-l="Books">' + count + '</td><td>' + esc(t['for']) + '</td></tr>';
+  }).join('');
+  tierName.extra = 'Extra';
+  document.querySelector('#items tbody').innerHTML = m.items.map(function (i) {
+    return '<tr><td><b>' + esc(i.title) + '</b>' + (i.note ? '<br><span class="small muted">' + esc(i.note) + '</span>' : '') + '<br><span class="small mono muted">' + esc(i.id) + '</span></td>' +
+      '<td data-l="Set">' + esc(tierName[i.tier] || i.tier) + '</td><td class="num mono" data-l="Size">' + gb(i.bytes) + '</td><td data-l="License">' + esc(i.license) + '</td>' +
+      '<td>' + (i.have || lib.books.some(function (b) { return b.item === i; }) ? '<span class="pill have">Loaded</span>' : '') + '</td></tr>';
+  }).join('');
+  document.getElementById('left').innerHTML = (m.left_out || []).map(function (l) {
+    return '<div class="row"><b>' + esc(l.what) + '</b><p>' + esc(l.why) + '</p></div>';
+  }).join('');
+  const a = m.ask || {};
+  document.querySelector('#models tbody').innerHTML = (a.suggested_models || []).map(function (x) {
+    return '<tr><td class="mono">' + esc(x.name) + '</td><td data-l="Made by">' + esc(x.maker) + '</td><td data-l="License">' + esc(x.license) + '</td><td class="num mono" data-l="Size">' + gb(x.bytes) + '</td><td data-l="Tried here">' + (x.tested ? 'Yes' : 'Not yet') + '</td></tr>';
+  }).join('');
+  document.getElementById('embed').textContent = a.embedding_model ? a.embedding_model.name : '';
+  if (location.hash) { const t = document.querySelector(location.hash); if (t) t.scrollIntoView(); }
+});
+</script>
+</body>
+</html>

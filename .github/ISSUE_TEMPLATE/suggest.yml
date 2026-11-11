@@ -1,0 +1,30 @@
+name: Suggest a book or a fix
+description: A book worth adding, a wrong or unclear answer, or something that doesn't work
+labels: [suggestion]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is it?
+      options:
+        - A book or collection to add
+        - A Quick answer that is wrong or unclear
+        - Something doesn't work
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: Tell us
+      description: For a book, include where it can be downloaded and its license if you know it. For a Quick answer, name the source that says otherwise.
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Your computer (if something doesn't work)
+      placeholder: Windows 11, Python 3.12, Firefox
+  - type: markdown
+    attributes:
+      value: "Please don't include anything personal: addresses, stock lists or photos of your home. Security problems go through Security → Report a vulnerability instead."

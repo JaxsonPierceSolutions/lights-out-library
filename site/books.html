@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>All books · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name">All books</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1>All books</h1>
+    <p class="lede" id="sub">Loading…</p>
+  </header>
+  <div id="out"></div>
+</div>
+<script src="/js/app.js"></script>
+<script>
+library().then(function (lib) {
+  const sub = document.getElementById('sub');
+  const out = document.getElementById('out');
+  if (!lib.up) { sub.textContent = 'The book server is not running. Close the library and start it again.'; return; }
+  if (!lib.books.length) { sub.textContent = ''; out.innerHTML = emptyNotice(); return; }
+  const total = lib.books.reduce(function (n, b) { return n + b.bytes; }, 0);
+  sub.textContent = lib.books.length + (lib.books.length === 1 ? ' book' : ' books') + ' on this computer' + (total ? ', ' + gb(total) : '') + '. Press one to open it.';
+  out.innerHTML = lib.shelves.map(function (s) {
+    const list = lib.books.filter(function (b) { return b.shelf === s.id; }).sort(function (a, b) { return a.title.localeCompare(b.title); });
+    if (!list.length) return '';
+    return '<h2>' + esc(s.name) + '</h2>' + list.map(function (b) {
+      return '<a class="row" href="/kiwix/viewer#' + b.id + '/"><b>' + esc(b.title) + '</b>' +
+        (b.summary && b.summary !== b.title ? '<p>' + esc(b.summary) + '</p>' : '') +
+        (b.bytes ? '<span class="meta mono" style="margin-left:0">' + gb(b.bytes) + '</span>' : '') + '</a>';
+    }).join('');
+  }).join('');
+});
+</script>
+</body>
+</html>

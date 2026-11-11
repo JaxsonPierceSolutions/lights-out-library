@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>Quick answers · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name">Quick answers</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1>Quick answers</h1>
+    <p class="lede">Short answers to the questions that matter most, each from named public guidance. They work even when no books are loaded.</p>
+  </header>
+  <div class="notice"><b class="tag">How far to trust these</b><p>Each answer was written by an AI system and compared with the source named under it. No doctor or nurse has reviewed them. They are first steps, not training. If you can reach real help, do.</p></div>
+  <div class="chips" id="jump" aria-label="Jump to an answer"></div>
+  <div id="out"></div>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/answers.js"></script>
+<script>
+document.getElementById('jump').innerHTML = ANSWERS.map(function (a) {
+  return '<a class="chip" href="#a-' + a.id + '">' + a.q.replace(/^How (do I|long|much) |^What do I do for /, '').replace(/\?$/, '').replace(/^./, function (c) { return c.toUpperCase(); }) + '</a>';
+}).join('');
+document.getElementById('out').innerHTML = ANSWERS.map(answerCard).join('');
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213338-lo-fix-b",
+ "image": 2,
+ "prompt": "Photo: a small engine part and a set of plain steel spanners on a mechanic's bench, a lantern lighting them from the left, sawdust and oil stains on the wood. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 16422364429615,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 4.0,
+ "made": "2026-11-10T16:38:44-0500"
+}

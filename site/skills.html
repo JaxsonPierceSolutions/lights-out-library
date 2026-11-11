@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>Old-time skills · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name">Old-time skills</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1>Old-time skills</h1>
+    <p class="lede">Books written for people doing it by hand, before electricity. Good for building, farming and preserving. Not for medicine: old treatments can hurt you.</p>
+    <form class="search" action="/search.html" method="get" role="search">
+      <input type="hidden" name="shelf" value="skills">
+      <label class="sr" for="q">Search the old books</label>
+      <input type="search" id="q" name="q" placeholder="Search the old books" autocomplete="off" required>
+      <button class="go">Search</button>
+    </form>
+    <div class="chips" aria-label="Common searches">
+      <a class="chip" href="/search.html?q=dovetail+joint&amp;shelf=skills">Dovetail joints</a>
+      <a class="chip" href="/search.html?q=sinking+well&amp;shelf=skills">Dig a well</a>
+      <a class="chip" href="/search.html?q=farm+gate&amp;shelf=skills">Build a gate</a>
+      <a class="chip" href="/search.html?q=smoking+meat&amp;shelf=skills">Smoke meat</a>
+      <a class="chip" href="/search.html?q=tanning+hides&amp;shelf=skills">Tan a hide</a>
+      <a class="chip" href="/search.html?q=soap+making&amp;shelf=skills">Make soap</a>
+    </div>
+  </header>
+  <div id="state"></div>
+  <div id="picks"></div>
+  <div id="scans"></div>
+</div>
+<script src="/js/app.js"></script>
+<script>
+// Hand-picked books inside the Project Gutenberg "building, trades and cooking" collection.
+// [heading, [[title, path inside the book, note]]]. If a newer copy of the collection has
+// moved a book, its link falls back to a search for the title.
+const PICKS = [
+  ['Woodworking and carpentry', [
+    ['Woodwork Joints: How They Are Set Out, How Made and Where Used', 'Woodwork%20Joints%3A%20How%20They%20Are%20Set%20Out%2C%20How%20Made%20and%20Where%20Used..21531', 'Dovetails, mortise and tenon, every joint'],
+    ['Wood-working for Beginners: A Manual for Amateurs', 'Wood-working%20for%20Beginners%3A%20A%20Manual%20for%20Amateurs.43604', ''],
+    ['Carpentry and Woodwork', 'Carpentry%20and%20Woodwork.43574', ''],
+    ['Rustic Carpentry', 'Rustic%20Carpentry.41668', 'Gates, fences and furniture from rough timber']]],
+  ['Fences, gates and buildings', [
+    ['Fences, Gates and Bridges: A Practical Manual', 'Fences%2C%20Gates%20and%20Bridges%3A%20A%20Practical%20Manual.58452', ''],
+    ['Practical Farm Buildings: Plans and Suggestions', 'Practical%20Farm%20Buildings%3A%20Plans%20and%20Suggestions.65618', ''],
+    ['Shelters, Shacks and Shanties', 'Shelters%2C%20Shacks%20and%20Shanties.28255', 'Log cabins and simple shelters'],
+    ['Concrete Construction for the Home and the Farm', 'Concrete%20Construction%20for%20the%20Home%20and%20the%20Farm.62312', '']]],
+  ['Wells and water', [
+    ['Water Supply: the Present Practice of Sinking and Boring Wells', 'Water%20Supply%3A%20the%20Present%20Practice%20of%20Sinking%20and%20Boring%20Wells.45703', 'How wells are dug and bored'],
+    ['Water Power for the Farm and Country Home', 'Water%20Power%20for%20the%20Farm%20and%20Country%20Home.62117', ''],
+    ['Mechanics of the Household', 'Mechanics%20of%20the%20Household.50846', 'Plumbing, heating, water systems']]],
+  ['Metal and tools', [
+    ['Forge work', 'Forge%20work.53854', 'Blacksmithing basics'],
+    ['The Library of Work and Play: Working in Metals', 'The%20Library%20of%20Work%20and%20Play%3A%20Working%20in%20Metals.45004', '']]],
+  ['Meat, fish and hides', [
+    ['Secrets of meat curing and sausage making', 'Secrets%20of%20meat%20curing%20and%20sausage%20making.58495', ''],
+    ['Home Pork Making', 'Home%20Pork%20Making.32414', 'Butchering, curing, smoking'],
+    ['Home Canning of Meat and Poultry', 'Home%20Canning%20of%20Meat%20and%20Poultry.63056', ''],
+    ['Principles and Practice of Fur Dressing and Fur Dyeing', 'Principles%20and%20Practice%20of%20Fur%20Dressing%20and%20Fur%20Dyeing.41938', 'Hides and furs'],
+    ['Canoe and Camp Cookery', 'Canoe%20and%20Camp%20Cookery.55705', '']]],
+  ['Canning, soap and the household', [
+    ['Every Step in Canning: The Cold-Pack Method', 'Every%20Step%20in%20Canning%3A%20The%20Cold-Pack%20Method.13775', ''],
+    ['Canning, Freezing, Storing Garden Produce', 'Canning%2C%20Freezing%2C%20Storing%20Garden%20Produce.59977', ''],
+    ['Soap-Making Manual', 'Soap-Making%20Manual.34114', ''],
+    ["Henley's Twentieth Century Formulas, Recipes and Processes", 'Henley%27s%20Twentieth%20Century%20Formulas%2C%20Recipes%20and%20Processes.53143', 'Thousands of household recipes and formulas']]]
+];
+library().then(function (lib) {
+  const state = document.getElementById('state');
+  const mine = shelfBooks(lib, 'skills');
+  const trades = lib.books.find(function (b) { return /^gutenberg_en_lcc-t/.test(b.id); });
+  const scans = lib.books.find(function (b) { return /^survivorlibrary/.test(b.id); });
+  if (!mine.length) {
+    state.innerHTML = '<div class="notice"><b class="tag">Not loaded</b><p>The old books come with the Full and Archive sets. They are not on this computer yet. <a href="/about.html">See the sets and their sizes</a>.</p></div>';
+    return;
+  }
+  state.innerHTML = '<h2>On this shelf</h2>' + mine.map(function (b) {
+    return '<a class="row" href="/kiwix/viewer#' + b.id + '/"><b>' + esc(b.title) + '</b>' + (b.bytes ? '<span class="meta mono" style="margin-left:0">' + gb(b.bytes) + '</span>' : '') + '</a>';
+  }).join('');
+  if (trades) {
+    document.getElementById('picks').innerHTML = PICKS.map(function (g) {
+      return '<h2>' + g[0] + '</h2>' + g[1].map(function (p) {
+        return '<a class="row" href="/kiwix/viewer#' + trades.id + '/' + p[1] + '"><b>' + esc(p[0]) + '</b>' + (p[2] ? '<p>' + esc(p[2]) + '</p>' : '') + '</a>';
+      }).join('');
+    }).join('');
+  }
+  if (scans) {
+    document.getElementById('scans').innerHTML = '<h2>The scanned collection</h2><div class="notice"><b class="tag">Browse by title</b>' +
+      '<p>These are photographs of book pages, so search can match a book\'s title but not the words inside it. Browse by subject instead.</p>' +
+      '<p><a class="btn quiet" href="/kiwix/viewer#' + scans.id + '/">Browse the scanned books by subject</a></p></div>';
+  }
+});
+</script>
+</body>
+</html>

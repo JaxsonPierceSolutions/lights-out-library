@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213341-lo-survival-c",
+ "image": 2,
+ "prompt": "Photo: a canvas backpack, a rolled wool blanket, a metal water bottle and a hand-crank lantern on a cabin floor by the door at night. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 118175698881578,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 4.0,
+ "made": "2026-11-10T16:40:21-0500"
+}

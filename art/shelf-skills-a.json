@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213341-lo-skills-a",
+ "image": 1,
+ "prompt": "Photo for an old-time skills shelf tile: a wooden hand plane with curled wood shavings, a chisel and a mallet on a carpenter's bench in a dark workshop. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 273378086540969,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 9.5,
+ "made": "2026-11-10T16:40:40-0500"
+}

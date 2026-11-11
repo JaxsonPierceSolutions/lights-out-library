@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213343-lo-reference-a",
+ "image": 1,
+ "prompt": "Photo for an encyclopedia shelf tile: a tall stack of thick plain hardcover books with blank spines and a small desk globe without markings on a dark library table. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 218034476687164,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 9.1,
+ "made": "2026-11-10T16:41:58-0500"
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>Search · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name" id="barname">Search</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1 id="title">Search</h1>
+    <p class="lede" id="sub">&nbsp;</p>
+    <form class="search" id="f" role="search">
+      <label class="sr" for="q">Search</label>
+      <input type="search" id="q" name="q" placeholder="Search the library" autocomplete="off" required>
+      <button class="go">Search</button>
+    </form>
+    <div class="chips" id="scope" aria-label="Which shelf to search"></div>
+  </header>
+  <div id="out"></div>
+  <div class="pager" id="pager" hidden><a class="btn quiet" id="prev">&larr; Back</a><a class="btn quiet" id="next">More &rarr;</a></div>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/answers.js"></script>
+<script src="/js/search.js"></script>
+</body>
+</html>

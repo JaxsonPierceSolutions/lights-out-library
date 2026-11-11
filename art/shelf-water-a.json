@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213336-lo-water-a",
+ "image": 1,
+ "prompt": "Photo for a water and food shelf tile: clear glass jars of dried beans and rice, a steel pot and a glass jug of clean water on a dark wooden kitchen table. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 145032994210075,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 6.9,
+ "made": "2026-11-10T16:36:58-0500"
+}

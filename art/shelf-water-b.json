@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213337-lo-water-b",
+ "image": 1,
+ "prompt": "Photo: a row of sealed glass canning jars of preserved vegetables and peaches on a rough pantry shelf in a dark cellar, lit by a lantern. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 68592276096973,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 6.8,
+ "made": "2026-11-10T16:37:21-0500"
+}

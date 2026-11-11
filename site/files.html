@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>Your own files · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name" id="bar-name">Your own files</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1 id="title">Your own files</h1>
+    <p class="lede" id="lede">Music, films and documents you added yourself. Press one to play or open it.</p>
+  </header>
+  <div class="chips" id="dirs" aria-label="Folders"></div>
+  <div id="player" class="player" hidden></div>
+  <div id="out"><p class="muted">Looking for files…</p></div>
+  <div class="notice" id="how" hidden><b class="tag">How to add files</b>
+    <p>Put them in the <code>files</code> folder inside the project folder, one folder for each kind: for example <code>files/music</code>, <code>files/films</code>, <code>files/documents</code>. They show up here the next time this page opens.</p>
+    <p class="small muted">Plays what your browser can: MP3, M4A, OGG and FLAC for music; MP4 and WebM for video; PDF and pictures open in a new tab.</p></div>
+</div>
+<script src="/js/app.js"></script>
+<script>
+const AUDIO = /\.(mp3|m4a|aac|ogg|oga|opus|flac|wav)$/i;
+const VIDEO = /\.(mp4|m4v|webm|ogv|mov)$/i;
+const params = new URLSearchParams(location.search);
+const dir = (params.get('dir') || '').replace(/^\/+|\/+$/g, '').split('/').filter(function (p) { return p && p !== '.' && p !== '..'; }).join('/');
+const NAMES = { music: 'Music', movies: 'Movies', films: 'Films', books: 'Books', documents: 'Documents', photos: 'Photos', videos: 'Videos' };
+const nice = function (n) { return NAMES[n.toLowerCase()] || n.replace(/[_-]+/g, ' ').replace(/^./, function (c) { return c.toUpperCase(); }); };
+const href = function (path) { return '/files/' + path.split('/').map(encodeURIComponent).join('/'); };
+const label = function (n) { return n.replace(/\.[a-z0-9]{2,5}$/i, '').replace(/[_]+/g, ' '); };
+
+if (dir) {
+  const parts = dir.split('/');
+  document.getElementById('title').textContent = nice(parts[parts.length - 1]);
+  document.getElementById('bar-name').textContent = nice(parts[0]);
+  document.title = nice(parts[parts.length - 1]) + ' · ' + document.title.split(' · ').pop();
+}
+
+function play(path, name) {
+  const p = document.getElementById('player');
+  const tag = VIDEO.test(name) ? 'video' : 'audio';
+  p.innerHTML = '<b class="tag">Playing</b><p class="now">' + esc(label(name)) + '</p><' + tag + ' controls autoplay preload="metadata" src="' + esc(href(path)) + '"></' + tag + '>';
+  p.hidden = false;
+  p.scrollIntoView({ block: 'nearest' });
+}
+
+(async function () {
+  const top = await ownFiles();
+  document.getElementById('dirs').innerHTML = top.map(function (d) {
+    const on = dir.split('/')[0] === d.name;
+    return '<a class="chip' + (on ? ' on' : '') + '" href="/files.html?dir=' + encodeURIComponent(d.name) + '"' + (on ? ' aria-current="page"' : '') + '>' + esc(nice(d.name)) + '</a>';
+  }).join('');
+  const items = await listFiles(dir);
+  const out = document.getElementById('out');
+  if (!items.length) {
+    out.innerHTML = '<div class="notice"><b class="tag">Nothing here yet</b><p>' + (dir ? 'This folder is empty.' : 'No files have been added.') + '</p></div>';
+    document.getElementById('how').hidden = false;
+    return;
+  }
+  const up = dir.indexOf('/') > 0 ? '<a class="row" href="/files.html?dir=' + encodeURIComponent(dir.replace(/\/[^/]+$/, '')) + '"><b>Back up one folder</b></a>' : '';
+  out.innerHTML = up + items.map(function (it) {
+    const path = (dir ? dir + '/' : '') + it.name;
+    if (it.type === 'directory') return '<a class="row" href="/files.html?dir=' + encodeURIComponent(path) + '"><b>' + esc(nice(it.name)) + '</b><span class="meta" style="margin-left:0">Folder</span></a>';
+    const size = it.size ? '<span class="meta mono" style="margin-left:0">' + gb(it.size) + '</span>' : '';
+    if (AUDIO.test(it.name) || VIDEO.test(it.name))
+      return '<a class="row" href="' + esc(href(path)) + '" data-play="' + esc(path) + '"><b>' + esc(label(it.name)) + '</b>' + size + '</a>';
+    return '<a class="row" href="' + esc(href(path)) + '" target="_blank" rel="noopener"><b>' + esc(label(it.name)) + '</b>' + size + '</a>';
+  }).join('');
+  out.addEventListener('click', function (e) {
+    const a = e.target.closest('[data-play]');
+    if (!a) return;
+    e.preventDefault();
+    play(a.dataset.play, a.dataset.play.split('/').pop());
+  });
+  if (!dir) document.getElementById('how').hidden = false;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213333-lo-hero-a",
+ "image": 2,
+ "prompt": "Wide photo for the top of an offline library home page: an old brass oil lantern glowing on a worn wooden workbench beside a small stack of plain cloth-bound books and a folded paper map, night, empty dark space on the left side of the frame. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 279854953195842,
+ "width": 1344,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 4.1,
+ "made": "2026-11-10T16:34:38-0500"
+}

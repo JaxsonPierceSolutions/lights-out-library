@@ -1,0 +1,739 @@
+{
+ "schema": 1,
+ "checked": "2026-11-10",
+ "limit_gb": 500,
+ "source": {
+  "name": "Kiwix",
+  "base": "https://download.kiwix.org/zim/",
+  "checksum_suffix": ".sha256"
+ },
+ "tiers": [
+  {
+   "id": "pocket",
+   "name": "Pocket",
+   "includes": [],
+   "for": "A thin laptop or a small drive. First aid, medicines, safe water, food storage, knots and getting through the first weeks."
+  },
+  {
+   "id": "essentials",
+   "name": "Essentials",
+   "includes": [
+    "pocket"
+   ],
+   "for": "Most laptops. Adds field manuals, repair guides, an illustrated encyclopedia, gardening, off-grid power and animal care."
+  },
+  {
+   "id": "full",
+   "name": "Full",
+   "includes": [
+    "pocket",
+    "essentials"
+   ],
+   "for": "A laptop with room to spare. Adds every Wikipedia article (text only), open textbooks, electronics and two shelves of old how-to books."
+  },
+  {
+   "id": "archive",
+   "name": "Archive",
+   "includes": [
+    "pocket",
+    "essentials",
+    "full"
+   ],
+   "for": "An external drive. Adds a very large collection of scanned pre-1930s books that can only be browsed by title."
+  }
+ ],
+ "shelves": [
+  {
+   "id": "medical",
+   "name": "Medical",
+   "blurb": "First aid, medicines, field medicine"
+  },
+  {
+   "id": "water",
+   "name": "Water and food",
+   "blurb": "Safe water, canning, storage, gardening"
+  },
+  {
+   "id": "fix",
+   "name": "Fix it",
+   "blurb": "Repair guides, cars, electronics, the house"
+  },
+  {
+   "id": "survival",
+   "name": "Survival",
+   "blurb": "Field manuals, preparedness, off-grid power"
+  },
+  {
+   "id": "skills",
+   "name": "Old-time skills",
+   "blurb": "How it was done by hand, before electricity"
+  },
+  {
+   "id": "reference",
+   "name": "Reference",
+   "blurb": "Encyclopedia and textbooks"
+  },
+  {
+   "id": "archive",
+   "name": "Full Wikipedia",
+   "blurb": "Every article, kept out of the main search"
+  }
+ ],
+ "items": [
+  {
+   "id": "wikipedia_en_medicine_maxi",
+   "title": "WikiMed medical encyclopedia (with pictures)",
+   "tier": "pocket",
+   "shelf": "medical",
+   "dir": "wikipedia",
+   "file": "wikipedia_en_medicine_maxi_2026-10.zim",
+   "bytes": 1864210320,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Wikipedia medical articles. Some images carry their own licenses."
+  },
+  {
+   "id": "mdwiki_en_all_maxi",
+   "title": "MDWiki medical reference",
+   "tier": "pocket",
+   "shelf": "medical",
+   "dir": "other",
+   "file": "mdwiki_en_all_maxi_2025-11.zim",
+   "bytes": 2302838768,
+   "license": "CC BY-SA (version not confirmed)",
+   "redistribution": "open",
+   "note": "WikiProjectMed. Much of it comes from Wikipedia."
+  },
+  {
+   "id": "nhs.uk_en_medicines",
+   "title": "NHS medicines A to Z",
+   "tier": "pocket",
+   "shelf": "medical",
+   "dir": "zimit",
+   "file": "nhs.uk_en_medicines_2026-09b.zim",
+   "bytes": 15322705,
+   "license": "Open Government Licence v3.0",
+   "redistribution": "conditions",
+   "note": "NHS terms: credit the NHS website with the date, and do not charge for access to it. An offline copy goes out of date."
+  },
+  {
+   "id": "zimgit-medicine_en",
+   "title": "Field medical guides",
+   "tier": "pocket",
+   "shelf": "medical",
+   "dir": "other",
+   "file": "zimgit-medicine_en_2024-08.zim",
+   "bytes": 70179585,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "A Kiwix collection of documents by various authors. No license list found."
+  },
+  {
+   "id": "irp.fas.org_en_military-medicine",
+   "title": "Military medicine manuals",
+   "tier": "pocket",
+   "shelf": "medical",
+   "dir": "zimit",
+   "file": "irp.fas.org_en_military-medicine_2026-10.zim",
+   "bytes": 64986090,
+   "license": "US government works (not confirmed per document)",
+   "redistribution": "unconfirmed",
+   "note": "Hosted by the Federation of American Scientists."
+  },
+  {
+   "id": "zimgit-water_en",
+   "title": "Water treatment guides",
+   "tier": "pocket",
+   "shelf": "water",
+   "dir": "other",
+   "file": "zimgit-water_en_2024-08.zim",
+   "bytes": 20924451,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "A Kiwix collection of documents by various authors. No license list found."
+  },
+  {
+   "id": "zimgit-food-preparation_en",
+   "title": "Food preparation and storage guides",
+   "tier": "pocket",
+   "shelf": "water",
+   "dir": "other",
+   "file": "zimgit-food-preparation_en_2025-04.zim",
+   "bytes": 97822565,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "A Kiwix collection of documents by various authors. No license list found."
+  },
+  {
+   "id": "usda-2015_en",
+   "title": "USDA Complete Guide to Home Canning (2015)",
+   "tier": "pocket",
+   "shelf": "water",
+   "dir": "other",
+   "file": "usda-2015_en_2025-04.zim",
+   "bytes": 19787133,
+   "license": "US government work, public domain (not confirmed from a USDA page)",
+   "redistribution": "open",
+   "note": ""
+  },
+  {
+   "id": "cooking.stackexchange.com_en_all",
+   "title": "Cooking questions and answers",
+   "tier": "pocket",
+   "shelf": "water",
+   "dir": "stack_exchange",
+   "file": "cooking.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 238098128,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "zimgit-knots_en",
+   "title": "Knots library",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "other",
+   "file": "zimgit-knots_en_2024-08.zim",
+   "bytes": 27945133,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "A Kiwix collection of documents by various authors. No license list found."
+  },
+  {
+   "id": "wikipedia_en_knots_maxi",
+   "title": "Knots (Wikipedia, with pictures)",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "wikipedia",
+   "file": "wikipedia_en_knots_maxi_2026-10.zim",
+   "bytes": 14093352,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": ""
+  },
+  {
+   "id": "zimgit-post-disaster_en",
+   "title": "Post-disaster guides",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "other",
+   "file": "zimgit-post-disaster_en_2024-05.zim",
+   "bytes": 644665513,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "A Kiwix collection of documents by various authors. No license list found."
+  },
+  {
+   "id": "ready.gov_en_all",
+   "title": "Ready.gov preparedness guides",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "zimit",
+   "file": "ready.gov_en_all_2026-10.zim",
+   "bytes": 2063895408,
+   "license": "US government work (FEMA), public domain (not confirmed from a FEMA page)",
+   "redistribution": "open",
+   "note": "Do not imply FEMA endorsement."
+  },
+  {
+   "id": "outdoors.stackexchange.com_en_all",
+   "title": "Outdoors questions and answers",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "stack_exchange",
+   "file": "outdoors.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 141820374,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "scoutwiki.org_en_all_maxi",
+   "title": "ScoutWiki",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "other",
+   "file": "scoutwiki.org_en_all_maxi_2026-10.zim",
+   "bytes": 25332511,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": ""
+  },
+  {
+   "id": "appropedia_en_all_maxi",
+   "title": "Appropedia: practical sustainable living",
+   "tier": "pocket",
+   "shelf": "survival",
+   "dir": "other",
+   "file": "appropedia_en_all_maxi_2026-02.zim",
+   "bytes": 581641351,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Hardware designs default to CERN-OHL-S."
+  },
+  {
+   "id": "armypubs_en_all",
+   "title": "Army field manuals",
+   "tier": "essentials",
+   "shelf": "survival",
+   "dir": "zimit",
+   "file": "armypubs_en_all_2024-12.zim",
+   "bytes": 8232396997,
+   "license": "US government works (per-document limits not confirmed)",
+   "redistribution": "open",
+   "note": "From the Army Publishing Directorate."
+  },
+  {
+   "id": "wikipedia_en_top_maxi",
+   "title": "Wikipedia essentials: 50,000 best articles, with pictures",
+   "tier": "essentials",
+   "shelf": "reference",
+   "dir": "wikipedia",
+   "file": "wikipedia_en_top_maxi_2026-09.zim",
+   "bytes": 6991081681,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": ""
+  },
+  {
+   "id": "wikipedia_en_chemistry_maxi",
+   "title": "Chemistry (Wikipedia, with pictures)",
+   "tier": "essentials",
+   "shelf": "reference",
+   "dir": "wikipedia",
+   "file": "wikipedia_en_chemistry_maxi_2026-10.zim",
+   "bytes": 383967742,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": ""
+  },
+  {
+   "id": "ifixit_en_all",
+   "title": "iFixit repair guides",
+   "tier": "essentials",
+   "shelf": "fix",
+   "dir": "ifixit",
+   "file": "ifixit_en_all_2025-12.zim",
+   "bytes": 3570695757,
+   "license": "CC BY-NC-SA 3.0 for user guides; other site content needs iFixit permission to reuse",
+   "redistribution": "noncommercial",
+   "note": "Fine to download for yourself. Not for sale or bundled drives."
+  },
+  {
+   "id": "diy.stackexchange.com_en_all",
+   "title": "Home improvement questions and answers",
+   "tier": "essentials",
+   "shelf": "fix",
+   "dir": "stack_exchange",
+   "file": "diy.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 2086024326,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "mechanics.stackexchange.com_en_all",
+   "title": "Car and engine repair questions and answers",
+   "tier": "essentials",
+   "shelf": "fix",
+   "dir": "stack_exchange",
+   "file": "mechanics.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 341672133,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "woodworking.stackexchange.com_en_all",
+   "title": "Woodworking questions and answers",
+   "tier": "essentials",
+   "shelf": "fix",
+   "dir": "stack_exchange",
+   "file": "woodworking.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 106657287,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "ham.stackexchange.com_en_all",
+   "title": "Ham radio questions and answers",
+   "tier": "essentials",
+   "shelf": "fix",
+   "dir": "stack_exchange",
+   "file": "ham.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 77108284,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "cd3wdproject.org_en_all",
+   "title": "CD3WD: practical how-to documents",
+   "tier": "essentials",
+   "shelf": "fix",
+   "dir": "zimit",
+   "file": "cd3wdproject.org_en_all_2026-11.zim",
+   "bytes": 572637480,
+   "license": "Not confirmed (a collection meant for free distribution)",
+   "redistribution": "unconfirmed",
+   "note": "No license statement found."
+  },
+  {
+   "id": "libretexts.org_en_med",
+   "title": "Medicine textbooks (LibreTexts)",
+   "tier": "essentials",
+   "shelf": "medical",
+   "dir": "libretexts",
+   "file": "libretexts.org_en_med_2025-01.zim",
+   "bytes": 1192567339,
+   "license": "Set per book: CC BY, CC BY-NC or CC BY-NC-SA",
+   "redistribution": "noncommercial",
+   "note": "Treat the collection as non-commercial."
+  },
+  {
+   "id": "medicalsciences.stackexchange.com_en_all",
+   "title": "Medical sciences questions and answers",
+   "tier": "essentials",
+   "shelf": "medical",
+   "dir": "stack_exchange",
+   "file": "medicalsciences.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 60659941,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Forum answers, not medical guidance."
+  },
+  {
+   "id": "wikivet.net_en_all_maxi",
+   "title": "WikiVet: animal medicine",
+   "tier": "essentials",
+   "shelf": "medical",
+   "dir": "other",
+   "file": "wikivet.net_en_all_maxi_2026-07a.zim",
+   "bytes": 56980345,
+   "license": "CC BY-NC-ND 3.0 (site pages disagree; the stricter reading is used)",
+   "redistribution": "noncommercial",
+   "note": ""
+  },
+  {
+   "id": "pets.stackexchange.com_en_all",
+   "title": "Pets questions and answers",
+   "tier": "essentials",
+   "shelf": "medical",
+   "dir": "stack_exchange",
+   "file": "pets.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 86785885,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "gardening.stackexchange.com_en_all",
+   "title": "Gardening questions and answers",
+   "tier": "essentials",
+   "shelf": "water",
+   "dir": "stack_exchange",
+   "file": "gardening.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 933097375,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "gardenology.org_en_all",
+   "title": "Gardenology plant encyclopedia",
+   "tier": "essentials",
+   "shelf": "water",
+   "dir": "other",
+   "file": "gardenology.org_en_all_2026-09.zim",
+   "bytes": 112499438,
+   "license": "Creative Commons (variant not confirmed)",
+   "redistribution": "unconfirmed",
+   "note": ""
+  },
+  {
+   "id": "homebrew.stackexchange.com_en_all",
+   "title": "Brewing questions and answers",
+   "tier": "essentials",
+   "shelf": "water",
+   "dir": "stack_exchange",
+   "file": "homebrew.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 37374625,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "energypedia_en_all_maxi",
+   "title": "energypedia: off-grid and renewable energy",
+   "tier": "essentials",
+   "shelf": "survival",
+   "dir": "other",
+   "file": "energypedia_en_all_maxi_2026-06.zim",
+   "bytes": 799712780,
+   "license": "CC BY-SA (3.0 or 4.0; the site states both)",
+   "redistribution": "open",
+   "note": "Not for promotional or advertising use."
+  },
+  {
+   "id": "sustainability.stackexchange.com_en_all",
+   "title": "Sustainable living questions and answers",
+   "tier": "essentials",
+   "shelf": "survival",
+   "dir": "stack_exchange",
+   "file": "sustainability.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 27687333,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "wikipedia_en_all_nopic",
+   "title": "Full Wikipedia: every article, text only",
+   "tier": "full",
+   "shelf": "archive",
+   "dir": "wikipedia",
+   "file": "wikipedia_en_all_nopic_2026-06.zim",
+   "bytes": 52690706555,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": ""
+  },
+  {
+   "id": "wikibooks_en_all_maxi",
+   "title": "Wikibooks: open textbooks and manuals",
+   "tier": "full",
+   "shelf": "reference",
+   "dir": "wikibooks",
+   "file": "wikibooks_en_all_maxi_2026-10.zim",
+   "bytes": 4739739728,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": ""
+  },
+  {
+   "id": "libretexts.org_en_bio",
+   "title": "Biology and botany textbooks (LibreTexts)",
+   "tier": "full",
+   "shelf": "reference",
+   "dir": "libretexts",
+   "file": "libretexts.org_en_bio_2025-01.zim",
+   "bytes": 2240946728,
+   "license": "Set per book: CC BY, CC BY-NC or CC BY-NC-SA",
+   "redistribution": "noncommercial",
+   "note": "Treat the collection as non-commercial."
+  },
+  {
+   "id": "electronics.stackexchange.com_en_all",
+   "title": "Electronics questions and answers",
+   "tier": "full",
+   "shelf": "fix",
+   "dir": "stack_exchange",
+   "file": "electronics.stackexchange.com_en_all_2026-10.zim",
+   "bytes": 4261397539,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Stack Exchange. Older posts are CC BY-SA 3.0. Credit the author and link the post."
+  },
+  {
+   "id": "gutenberg_en_lcc-s",
+   "title": "Old farming, hunting and fishing books (Project Gutenberg)",
+   "tier": "full",
+   "shelf": "skills",
+   "dir": "gutenberg",
+   "file": "gutenberg_en_lcc-s_2026-03.zim",
+   "bytes": 4532683039,
+   "license": "Public domain in the US, plus the Project Gutenberg trademark license",
+   "redistribution": "conditions",
+   "note": "Selling copies that keep the Project Gutenberg name owes a 20% royalty, or the name must be removed."
+  },
+  {
+   "id": "gutenberg_en_lcc-t",
+   "title": "Old building, trades and cooking books (Project Gutenberg)",
+   "tier": "full",
+   "shelf": "skills",
+   "dir": "gutenberg",
+   "file": "gutenberg_en_lcc-t_2026-03.zim",
+   "bytes": 13154803470,
+   "license": "Public domain in the US, plus the Project Gutenberg trademark license",
+   "redistribution": "conditions",
+   "note": "Selling copies that keep the Project Gutenberg name owes a 20% royalty, or the name must be removed."
+  },
+  {
+   "id": "survivorlibrary.com_en_all",
+   "title": "Survivor Library: scanned pre-1930s how-to books",
+   "tier": "archive",
+   "shelf": "skills",
+   "dir": "zimit",
+   "file": "survivorlibrary.com_en_all_2026-09.zim",
+   "bytes": 220347600505,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "More than 11,000 scanned books. Search matches titles only, not the words inside."
+  },
+  {
+   "id": "wikipedia_en_all_maxi",
+   "title": "Full Wikipedia with pictures",
+   "tier": "extra",
+   "shelf": "archive",
+   "dir": "wikipedia",
+   "file": "wikipedia_en_all_maxi_2026-08.zim",
+   "bytes": 127418087648,
+   "license": "CC BY-SA 4.0",
+   "redistribution": "open",
+   "note": "Take it instead of the text-only edition, not as well as it."
+  },
+  {
+   "id": "quickguidesformedicine_en_all",
+   "title": "Quick guides for medicine (videos)",
+   "tier": "extra",
+   "shelf": "medical",
+   "dir": "videos",
+   "file": "quickguidesformedicine_en_all_2026-06.zim",
+   "bytes": 527712036,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "Made from a YouTube channel. No license statement found."
+  },
+  {
+   "id": "lrnselfreliance_en_all",
+   "title": "Learning Self-Reliance (videos)",
+   "tier": "extra",
+   "shelf": "skills",
+   "dir": "videos",
+   "file": "lrnselfreliance_en_all_2026-09.zim",
+   "bytes": 3974043902,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "Made from a YouTube channel. No license statement found."
+  },
+  {
+   "id": "urban-prepper_en_all",
+   "title": "Urban Prepper (videos)",
+   "tier": "extra",
+   "shelf": "survival",
+   "dir": "videos",
+   "file": "urban-prepper_en_all_2026-08.zim",
+   "bytes": 2245235674,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "Made from a YouTube channel. No license statement found."
+  },
+  {
+   "id": "canadian-prepper_en_preppingfood",
+   "title": "Prepping food (videos)",
+   "tier": "extra",
+   "shelf": "water",
+   "dir": "videos",
+   "file": "canadian-prepper_en_preppingfood_2026-10.zim",
+   "bytes": 2194586332,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "Made from a YouTube channel. No license statement found."
+  },
+  {
+   "id": "canadian-prepper_en_winterprepping",
+   "title": "Winter prepping (videos)",
+   "tier": "extra",
+   "shelf": "survival",
+   "dir": "videos",
+   "file": "canadian-prepper_en_winterprepping_2026-08.zim",
+   "bytes": 1341548037,
+   "license": "Not confirmed",
+   "redistribution": "unconfirmed",
+   "note": "Made from a YouTube channel. No license statement found."
+  }
+ ],
+ "tools": {
+  "kiwix-tools": {
+   "version": "3.8.1",
+   "license": "GPL-3.0-or-later",
+   "base": "https://download.kiwix.org/release/kiwix-tools/",
+   "platforms": {
+    "windows-x86_64": {
+     "file": "kiwix-tools_win-x86_64-3.8.1.zip",
+     "bytes": 18301924,
+     "md5": "95f953f726aac8f320c7038f85785df9"
+    },
+    "linux-x86_64": {
+     "file": "kiwix-tools_linux-x86_64-3.8.1.tar.gz",
+     "bytes": 21503420,
+     "md5": "ab0e372a814fde612ed79fd2a0b82d5a"
+    },
+    "linux-aarch64": {
+     "file": "kiwix-tools_linux-aarch64-3.8.1.tar.gz",
+     "bytes": 20430528,
+     "md5": "8bf90c72564a91f0a459c4dcbb39bdae"
+    },
+    "macos-arm64": {
+     "file": "kiwix-tools_macos-arm64-3.8.1.tar.gz",
+     "bytes": 10254751,
+     "md5": "300d29d6ea02a9353092f29b8fabf76a"
+    },
+    "macos-x86_64": {
+     "file": "kiwix-tools_macos-x86_64-3.8.1.tar.gz",
+     "bytes": 10768392,
+     "md5": "7032160e0c4dbabc11830e27f82a9c4f"
+    }
+   }
+  }
+ },
+ "ask": {
+  "optional": true,
+  "default_enabled": false,
+  "runtime": "Ollama (MIT license), installed by the user",
+  "allowance_bytes": 6000000000,
+  "suggested_models": [
+   {
+    "name": "granite3.3:8b",
+    "maker": "IBM (US)",
+    "license": "Apache-2.0",
+    "bytes": 4900000000,
+    "tested": false
+   },
+   {
+    "name": "mistral:7b",
+    "maker": "Mistral AI (France)",
+    "license": "Apache-2.0",
+    "bytes": 4400000000,
+    "tested": false
+   },
+   {
+    "name": "llama3.1:8b",
+    "maker": "Meta (US)",
+    "license": "Llama 3.1 Community License",
+    "bytes": 4900000000,
+    "tested": true
+   }
+  ],
+  "embedding_model": {
+   "name": "nomic-embed-text",
+   "maker": "Nomic AI (US)",
+   "license": "Apache-2.0",
+   "bytes": 274000000
+  }
+ },
+ "left_out": [
+  {
+   "what": "Movies and music",
+   "why": "Personal files. Nobody else can legally download them."
+  },
+  {
+   "what": "TruePrepper",
+   "why": "All rights reserved, and Kiwix's own tracker records no permission."
+  },
+  {
+   "what": "Low-Tech Magazine",
+   "why": "No reuse license found, and its mixed languages break search across books."
+  },
+  {
+   "what": "Old medical books (Project Gutenberg class R)",
+   "why": "Treatments from a century ago, easy to mistake for current advice."
+  },
+  {
+   "what": "Regional maps, nautical charts and a local plants page",
+   "why": "Tied to one area. A build-your-own-region map is on the roadmap."
+  }
+ ]
+}

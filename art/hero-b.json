@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213333-lo-hero-b",
+ "image": 2,
+ "prompt": "Wide photo: a single lit kerosene lantern on a windowsill at night, a dark quiet room, an open blank-paged notebook and a pencil on a wooden table in the foreground, large area of darkness on the right. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 104878803387099,
+ "width": 1344,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 5.0,
+ "made": "2026-11-10T16:35:05-0500"
+}

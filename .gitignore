@@ -1,0 +1,12 @@
+content/
+tools/
+config.json
+__pycache__/
+*.pyc
+*.part
+*.bad
+.pytest_cache/
+*.log
+out/
+files/
+tests/private-words.txt

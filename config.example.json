@@ -1,0 +1,12 @@
+{
+  "port": 8600,
+  "kiwix_port": 8601,
+  "content_dir": "content",
+  "open_browser": true,
+  "ask": {
+    "enabled": false,
+    "model": "",
+    "embed_model": "nomic-embed-text",
+    "ollama_url": "http://127.0.0.1:11434"
+  }
+}

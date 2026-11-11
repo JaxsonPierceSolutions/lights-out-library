@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0e11">
+<title>Ask · Lights Out Library</title>
+<script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav class="bar"><div class="in"><a class="home" href="/"><span data-ic="home"></span>Home</a><span class="name">Ask</span><button class="theme" type="button"></button></div></nav>
+<div class="wrap">
+  <header class="page-head">
+    <h1>Ask the library</h1>
+    <p class="lede">Type a question in plain words. A small AI on this computer finds pages in the library and answers from them, showing which pages it read.</p>
+  </header>
+  <div id="off" class="notice" hidden><b class="tag">Ask is turned off</b>
+    <p>This part is optional and off unless you set it up. It needs a free program called Ollama and a model you choose, about 5 GB. Everything else in the library works without it.</p>
+    <p class="small muted">How to turn it on is in <a href="/about.html#ask">About this library</a>.</p></div>
+  <form id="f" hidden>
+    <label class="sr" for="q">Your question</label>
+    <textarea id="q" placeholder="Example: how do I keep meat without a freezer?" required></textarea>
+    <p style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px"><button class="go">Ask</button><span class="muted small">Can take a minute on a laptop.</span></p>
+  </form>
+  <div id="quick"></div>
+  <div id="box" class="notice" hidden><b class="tag">AI answer from the library</b><div id="ans"></div></div>
+  <div class="danger" id="warn" hidden><b class="tag">Check before you act</b><p>The AI can misread a page, mix up advice or leave things out. A Quick answer card, when one appears above, is more reliable than the AI text. For anything that matters, open the pages it read. It is not a doctor.</p></div>
+  <div id="srcs"></div>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/answers.js"></script>
+<script>
+const $ = function (id) { return document.getElementById(id); };
+let sources = [];
+function render(text) {
+  let h = esc(text).replace(/^\s*[*•-]\s+/gm, '• ').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  return h.replace(/\[(\d+(?:\s*,\s*\d+)*)\]/g, function (m, nums) {
+    return nums.split(',').map(function (n) {
+      n = n.trim();
+      const s = sources.find(function (x) { return String(x.n) === n; });
+      return s && s.link ? '<a href="/kiwix/viewer#' + s.link + '">[' + n + ']</a>' : '[' + n + ']';
+    }).join('');
+  });
+}
+async function ask(q) {
+  const quick = findAnswers(q);
+  $('quick').innerHTML = quick.map(answerCard).join('');
+  $('box').hidden = false; $('warn').hidden = true; $('srcs').innerHTML = ''; sources = [];
+  $('ans').innerHTML = '<span class="wait">Searching the library</span>';
+  const notes = quick.map(function (a) { return { title: a.q, text: a.a.join(' ').replace(/<[^>]+>/g, '') + ' Source: ' + a.src }; });
+  let r;
+  try { r = await fetch('/ask/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q: q, notes: notes }) }); }
+  catch (e) { $('ans').textContent = 'The AI is not answering. Check that Ollama is running on this computer.'; return; }
+  if (!r.ok) {
+    let msg = 'The AI is not answering. Check that Ollama is running on this computer.';
+    try { msg = (await r.json()).error || msg; } catch (e) {}
+    $('ans').textContent = msg; return;
+  }
+  const reader = r.body.getReader(); const dec = new TextDecoder();
+  let buf = '', head = null, text = '';
+  for (;;) {
+    const x = await reader.read();
+    if (x.done) break;
+    buf += dec.decode(x.value, { stream: true });
+    if (!head) {
+      const i = buf.indexOf('\n');
+      if (i < 0) continue;
+      try { head = JSON.parse(buf.slice(0, i)); } catch (e) { head = { sources: [] }; }
+      sources = head.sources || [];
+      buf = buf.slice(i + 1);
+      $('ans').innerHTML = '<span class="wait">Reading ' + sources.length + ' pages and writing the answer</span>';
+      $('srcs').innerHTML = sources.length ? '<h2>Pages it read</h2>' + sources.map(function (s) {
+        const inner = '<b>[' + s.n + '] ' + esc(s.title) + '</b><span class="src">' + esc(s.book) + '</span>';
+        return s.link ? '<a class="row" href="/kiwix/viewer#' + s.link + '">' + inner + '</a>' : '<div class="row">' + inner + '</div>';
+      }).join('') : '';
+    }
+    if (buf) { text += buf; buf = ''; $('ans').innerHTML = render(text); }
+  }
+  if (!text) $('ans').textContent = 'No answer came back. Try again, or use the search box.';
+  $('warn').hidden = false;
+}
+library().then(function (lib) {
+  if (!(lib.status.ask && lib.status.ask.enabled)) { $('off').hidden = false; return; }
+  $('f').hidden = false;
+  $('f').onsubmit = function (e) {
+    e.preventDefault();
+    const v = $('q').value.trim();
+    if (!v) return;
+    history.replaceState(null, '', '?q=' + encodeURIComponent(v));
+    ask(v);
+  };
+  const q0 = (new URLSearchParams(location.search).get('q') || '').trim();
+  if (q0) { $('q').value = q0; ask(q0); }
+});
+</script>
+</body>
+</html>

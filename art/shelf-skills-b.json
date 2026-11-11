@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213343-lo-skills-c",
+ "image": 1,
+ "prompt": "Photo: antique cloth-bound books with blank worn spines stacked beside a hand saw and a ball of twine on a rough farmhouse table. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 124953731088123,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 9.2,
+ "made": "2026-11-10T16:41:32-0500"
+}

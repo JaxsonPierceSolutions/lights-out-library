@@ -1,0 +1,17 @@
+{
+ "job": "20261110-213336-lo-medical-c",
+ "image": 1,
+ "prompt": "Photo: hands-free still life of a clean enamel basin of water, a folded white cloth and bandage rolls on a dark table, a lantern glow at the edge. Low-key photograph, warm amber lantern light from one side, deep dark background, shallow depth of field, realistic, calm, no people, no text, no labels, no logos, no numbers",
+ "negative": "",
+ "model": "schnell",
+ "steps": 4,
+ "cfg": 1.0,
+ "sampler": "euler",
+ "checkpoint": "flux1-schnell-fp8.safetensors",
+ "seed": 254354602935180,
+ "width": 1152,
+ "height": 768,
+ "machine": "pc",
+ "seconds": 6.7,
+ "made": "2026-11-10T16:36:35-0500"
+}
