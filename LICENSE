@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This license covers the code, pages, scripts, manifest, documentation and
-pictures in this repository. It does not cover the books the fetch script
-downloads, which belong to their owners under their own licenses (see
-docs/licenses.md), or the bundled Geist fonts (SIL Open Font License, see
-site/fonts/LICENSE-Geist.txt).
