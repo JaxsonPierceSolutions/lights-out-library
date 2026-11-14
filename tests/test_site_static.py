@@ -43,10 +43,11 @@ def test_every_local_file_a_page_asks_for_exists():
                 continue
             if not (SITE / ref.lstrip("/")).is_file():
                 missing.append(f"{page.name}: {ref}")
-    css = (SITE / "css" / "app.css").read_text(encoding="utf-8")
-    for ref in re.findall(r"url\(([^)]+)\)", css):
-        if not (SITE / "css" / ref.strip("\"'")).resolve().is_file():
-            missing.append(f"app.css: {ref}")
+    for sheet in sorted((SITE / "css").glob("*.css")):
+        css = sheet.read_text(encoding="utf-8")
+        for ref in re.findall(r"url\(([^)]+)\)", css):
+            if not (SITE / "css" / ref.strip("\"'")).resolve().is_file():
+                missing.append(f"{sheet.name}: {ref}")
     assert not missing, missing
 
 
@@ -55,43 +56,11 @@ def test_pages_open_dark_and_set_the_theme_before_painting():
         html = page.read_text(encoding="utf-8")
         assert '<html lang="en" data-theme="dark">' in html, page.name
         head = html.split("</head>")[0]
-        assert head.index("/js/theme.js") < head.index("/css/app.css"), page.name
+        assert head.index("/js/theme.js") < head.index("/css/tokens.css"), page.name
         assert 'name="viewport"' in head, page.name
 
 
-def test_three_themes_are_defined_with_every_token():
-    css = (SITE / "css" / "app.css").read_text(encoding="utf-8")
-    tokens = ["--bg", "--surface", "--surface-2", "--line", "--text", "--muted", "--accent", "--accent-ink", "--ok", "--danger"]
-    for theme in ("dark", "day", "night"):
-        block = re.search(r"\[data-theme=%s\]\{([^}]*)\}" % theme, css)
-        assert block, theme
-        for token in tokens:
-            assert token + ":" in block.group(1), f"{theme} is missing {token}"
-
-
-def _luminance(hex_color):
-    rgb = [int(hex_color[i:i + 2], 16) / 255 for i in (1, 3, 5)]
-    lin = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
-    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
-
-
-def _contrast(a, b):
-    la, lb = sorted((_luminance(a), _luminance(b)), reverse=True)
-    return (la + 0.05) / (lb + 0.05)
-
-
-def test_text_contrast_meets_the_design_floor():
-    """DESIGN.md: 7:1 for body text, 4.5:1 for everything else, in Dark and Day.
-    Night (red) is deliberately dim to protect night vision, so it has a lower floor."""
-    css = (SITE / "css" / "app.css").read_text(encoding="utf-8")
-    for theme, body_floor, other_floor in (("dark", 7, 4.5), ("day", 7, 4.5), ("night", 4.5, 3)):
-        block = re.search(r"\[data-theme=%s\]\{([^}]*)\}" % theme, css).group(1)
-        tok = dict(re.findall(r"(--[a-z0-9-]+):(#[0-9a-f]{6})", block))
-        for bg in ("--bg", "--surface"):
-            assert _contrast(tok["--text"], tok[bg]) >= body_floor, (theme, bg, "text")
-            assert _contrast(tok["--muted"], tok[bg]) >= other_floor, (theme, bg, "muted")
-            assert _contrast(tok["--accent"], tok[bg]) >= other_floor, (theme, bg, "accent")
-        assert _contrast(tok["--accent-ink"], tok["--accent"]) >= 4.5, (theme, "button text")
+# The themes and their contrast are checked in test_tokens.py, against the shared JPS tokens.
 
 
 def test_fonts_ship_with_their_license():

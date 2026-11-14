@@ -47,7 +47,10 @@ Card and footer links can be paths on this site, `#anchors` or `http(s)` address
 else is refused. Files and folders whose names start with a dot are never served.
 
 Your pages should look like the rest: copy the head and the top bar from `site/answers.html`,
-and use the parts and colors in [DESIGN.md](../DESIGN.md). Pages must not load anything from
+and use the parts and colors in [DESIGN.md](../DESIGN.md): load `/css/tokens.css`, `/css/lightsout-tokens.css`
+and `/css/app.css` in that order, and use the token names (`var(--surface)`, `var(--accent)`, ...) rather
+than writing colors. The themes are `dark`, `light` and `night`; older layers that use `--accent-ink`,
+`--danger` or `--img` keep working. Pages must not load anything from
 the internet. The browser test only checks the library's own pages, so check yours the same way.
 
 ## Stacking layers

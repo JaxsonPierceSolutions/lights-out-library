@@ -170,7 +170,7 @@ def test_theme_button_cycles_and_is_remembered(chromium, site):
     theme = lambda: page.evaluate("document.documentElement.dataset.theme")
     assert theme() == "dark"
     page.locator("button.theme").click()
-    assert theme() == "day"
+    assert theme() == "light"
     page.locator("button.theme").click()
     assert theme() == "night"
     page = w.open("/books.html")
@@ -220,3 +220,29 @@ def test_book_server_down_is_said_plainly(chromium, tmp_path):
     w.close()
     srv.shutdown()
     srv.server_close()
+
+
+AXE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "vendor", "axe.min.js")
+AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]
+
+
+@pytest.mark.parametrize("size", ["phone", "desktop"])
+@pytest.mark.parametrize("theme", ["dark", "light", "night"])
+def test_no_wcag_aa_violations(chromium, site, theme, size):
+    """axe-core (tests/vendor, MPL-2.0, test-only) on every page in every theme. Any WCAG 2.1 A or
+    AA violation fails. axe finds only part of the problems; it does not replace trying the pages
+    with a keyboard and a screen reader. The release zip leaves tests/vendor out, so it skips there."""
+    if not os.path.isfile(AXE):
+        pytest.skip("axe-core is not in tests/vendor")
+    w = Watch(chromium, site, size)
+    w.ctx.add_init_script("try { localStorage.setItem('lo-theme', '%s') } catch (e) {}" % theme)
+    found = []
+    for path in PAGES:
+        page = w.open(path)
+        assert page.evaluate("document.documentElement.dataset.theme") == theme
+        page.add_script_tag(path=AXE)
+        result = page.evaluate("t => axe.run(document, {runOnly: {type: 'tag', values: t}})", AXE_TAGS)
+        found += ["%s %s (%s): %s" % (path, v["id"], v["impact"], "; ".join(n["target"][0] for n in v["nodes"][:3]))
+                  for v in result["violations"]]
+    w.close()
+    assert found == []
