@@ -35,8 +35,8 @@ const esc = function (s) {
 };
 const gb = function (n) { return n >= 1e9 ? (n / 1e9).toFixed(1) + ' GB' : Math.max(1, Math.round(n / 1e6)) + ' MB'; };
 
-// Theme button: Dark -> Day -> Night (red) -> Dark.
-const THEMES = [['dark', 'Dark', 'moon'], ['day', 'Day', 'sun'], ['night', 'Night', 'eye']];
+// Theme button: Dark -> Light -> Night (red) -> Dark. Dark and Light are the shared JPS themes.
+const THEMES = [['dark', 'Dark', 'moon'], ['light', 'Light', 'sun'], ['night', 'Night', 'eye']];
 function paintTheme(btn) {
   const cur = document.documentElement.getAttribute('data-theme') || 'dark';
   const t = THEMES.find(function (x) { return x[0] === cur; }) || THEMES[0];

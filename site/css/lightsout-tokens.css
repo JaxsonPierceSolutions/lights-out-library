@@ -1,0 +1,47 @@
+/* Lights Out additions to the shared JPS tokens (tokens.css, copied from the JPS Console).
+   Only what the shared set lacks goes here, and each item is a gap to raise with the Console,
+   so it can move into the shared file. app.css writes no raw color, size or radius; it uses
+   var(--...) from tokens.css or from this file. tests/test_tokens.py checks both. */
+
+/* Gap 1: a reading scale. The Console is a dense desk tool (14px body, 32px controls). Lights Out
+   is read at arm's length in the dark on a phone, so it needs larger body text, a larger title
+   and thumb-sized targets (DESIGN.md, rules 3 and 4). */
+:root {
+  --fs-read: 17px;       /* body text; the shared --fs-md is 16px */
+  --fs-title: 40px;      /* page title from 768px; the shared --fs-xl (28px) is used on phones */
+  --touch-h: 48px;       /* anything you can press; the shared --control-h is 32px */
+  --control-h-lg: 56px;  /* the search box and its button */
+  --sp-7: 48px;          /* one step past the shared --sp-6 (32px) */
+  --read-max: 1080px;    /* a reading column; the shared --page-max (1600px) is for tables */
+  --img-filter: none;    /* pictures are shown as they are, except in Night */
+}
+
+/* Gap 2: a Night (red) theme, to keep night vision. Black ground, dim red text, pictures turned
+   to dim red-grey, nothing white on screen. Same token names as the shared Dark and Light themes.
+   Screen only: paper is always the shared Light theme. Status colors are all red here, so every
+   status is always shown with its word, as the shared rules already require. */
+@media screen {
+  :root[data-theme="night"] {
+    color-scheme: dark;
+    --bg: #050000; --surface: #0d0101; --surface-solid: #0d0101; --surface-2: #170303; --surface-3: #210505;
+    --text: #ff5a4d; --muted: #d94a3e;
+    --line: #3a0a0a; --line-strong: #b8342b;
+    --accent: #ff3b2e; --on-accent: #050000; --accent-soft: #210505; --accent-line: #7a1d16; --focus: #ff3b2e;
+    --high: #ff5a4d; --high-bg: #210505; --high-line: #7a1d16; --mark-bad: #ff3b2e;
+    --med: #ff5a4d; --med-bg: #210505; --med-line: #7a1d16; --mark-warn: #ff3b2e;
+    --low: #ff5a4d; --low-bg: #210505; --low-line: #7a1d16; --mark-low: #ff3b2e;
+    --ok: #d94a3e; --ok-bg: #210505; --ok-line: #7a1d16; --mark-good: #ff3b2e;
+    --neutral: #d94a3e; --neutral-bg: #210505; --neutral-line: #7a1d16; --mark-neutral: #b8342b;
+    --mark-info: #ff3b2e; --track: #210505;
+    --img-filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(3) brightness(.38);
+  }
+}
+
+/* Older names, kept so add-on layers written before the shared tokens keep working
+   (docs/layers.md). New pages use the shared names. */
+:root {
+  --accent-ink: var(--on-accent);
+  --danger: var(--high);
+  --img: var(--img-filter);
+  --shade: var(--bg);
+}

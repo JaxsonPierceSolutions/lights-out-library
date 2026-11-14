@@ -15,10 +15,25 @@ Everything below follows from that.
 
 ## The idea: a lantern on a workbench
 
-A warm light in a dark room. Dark, quiet surfaces; one warm amber light that
-marks the thing to press; photographs lit the same way (low, warm, from one
-side). Calm and capable, like a well-kept field manual. Not tactical, not
-doomsday, not a dashboard.
+A warm light in a dark room. Dark, quiet, flat surfaces; one signal color
+(the shared JPS accent) marks the thing to press; photographs lit low and warm
+from one side. Calm and capable, like a well-kept field manual. Not tactical,
+not doomsday, not a dashboard.
+
+## The look comes from the shared JPS tokens
+
+Colors, type sizes, spacing, corners and focus come from the shared Jaxson
+Pierce Solutions design tokens, the same file the JPS Console uses (modeled
+on IBM Carbon). Lights Out doesn't keep its own copy of the look:
+
+- `site/css/tokens.css` is copied from the Console by
+  `scripts/sync_tokens.py` and never edited by hand. Its header names the
+  source commit; `tests/test_tokens.py` fails if it was changed.
+- `site/css/lightsout-tokens.css` holds only what the shared set lacks (see
+  "Gaps" below). Each item is something to raise with the Console so it can
+  move into the shared file.
+- `site/css/app.css` writes no raw color, font size or radius. It uses
+  `var(--...)` only, and `tests/test_tokens.py` checks every line.
 
 ## Rules that don't bend
 
@@ -26,10 +41,10 @@ doomsday, not a dashboard.
    remote images. Fonts, icons and pictures ship in this repo. A browser test
    fails on any request that leaves `127.0.0.1`.
 2. **Dark by default.** The page opens dark even if the device is set to
-   light. Day and Night (red) are choices the reader makes.
+   light. Light and Night (red) are choices the reader makes.
 3. **Readable at arm's length in the dark.** Body text 17 px or larger, line
    height 1.5 or more. Contrast at least 7:1 for body text and 4.5:1 for
-   everything else, in all three themes.
+   everything else, in Dark and Light; Night keeps 4.5:1 for body text, as it is dim on purpose.
 4. **Thumb-sized targets.** Anything you can press is at least 48 px tall.
 5. **The search box is the most prominent thing on the home page.** Then the
    quick answers. Then the shelves.
@@ -42,55 +57,77 @@ doomsday, not a dashboard.
 
 Set by `data-theme` on `<html>`; the choice is kept in `localStorage`.
 
-| Token | Dark (default) | Day | Night (red) |
-|---|---|---|---|
-| `--bg` | `#0c0e11` | `#f3efe6` | `#050000` |
-| `--surface` | `#14181d` | `#fffdf8` | `#0d0101` |
-| `--surface-2` | `#1c2229` | `#ebe5d8` | `#170303` |
-| `--line` | `#2a323c` | `#d5cdbd` | `#3a0a0a` |
-| `--text` | `#eef1f4` | `#1a1d21` | `#ff5a4d` |
-| `--muted` | `#a3b1bf` | `#515b66` | `#c23b31` |
-| `--accent` | `#f2a93b` | `#955000` | `#ff3b2e` |
-| `--accent-ink` | `#1b1204` | `#ffffff` | `#050000` |
-| `--ok` | `#74d391` | `#1d7a3c` | `#c23b31` |
-| `--danger` | `#ff7a6b` | `#b3261e` | `#ff5a4d` |
+| Theme | Where it comes from | What it is |
+|---|---|---|
+| Dark (default) | shared tokens, `:root` | Near-black canvas, opaque panels, cyan signal |
+| Light | shared tokens, `[data-theme="light"]` | IBM Carbon g10 grays, blue signal. Paper always prints in Light. |
+| Night (red) | `lightsout-tokens.css` | Black ground, dim red text, pictures turned to dim red-grey. Nothing white is on screen. |
 
-Night (red) is for keeping your night vision: black background, dim red
-text, pictures turned to dim red-grey. Nothing white is on screen in that theme.
+A reader who picked "Day" before the shared tokens gets Light.
+
+Token names are the shared ones: `--bg`, `--surface`, `--surface-2`,
+`--surface-3`, `--line`, `--line-strong`, `--text`, `--muted`, `--accent`,
+`--on-accent`, `--accent-soft`, `--accent-line`, `--focus`, and the status
+sets `--high`/`--high-bg`/`--high-line`, `--ok`/`--ok-bg`/`--ok-line` and the
+`--mark-*` colors. Older names (`--accent-ink`, `--danger`, `--img`,
+`--shade`) still work for add-on layers written before the change.
+
+## Gaps: what Lights Out adds to the shared tokens
+
+| Token | Value | Why the shared set doesn't cover it |
+|---|---|---|
+| `--fs-read` | 17 px | Body text read at arm's length; the shared body sizes are 14 and 16 px |
+| `--fs-title` | 40 px | Page title from 768 px; the shared largest heading is 28 px |
+| `--touch-h` | 48 px | Thumb-sized targets; the shared control height is 32 px |
+| `--control-h-lg` | 56 px | The search box and its button |
+| `--sp-7` | 48 px | One spacing step past the shared 32 px |
+| `--read-max` | 1080 px | A reading column; the shared page width is 1600 px |
+| `--img-filter` | none (Night: dim red-grey) | Pictures in Night |
+| Night theme | red set | The shared set has Dark and Light only |
 
 ## Type
 
-- **Geist** (variable, 400 to 700) for everything. **Geist Mono** for sizes,
-  counts and file names. Both are in `site/fonts/` under the SIL Open Font
-  License. System fonts are the fallback.
-- Sizes: page title 30/34 px (40/44 from 768 px), section label 13 px caps
-  with 0.08em tracking, body 17 px, small 14.5 px. Never smaller than 13 px.
-- Weights: 400 body, 600 for links and tile names, 700 for titles. No light
-  weights; thin strokes vanish on a dim screen.
+- **Geist** for everything, **Geist Mono** for sizes, counts, file names and
+  section labels (shared `--sans` and `--mono`). Both are in `site/fonts/`
+  under the SIL Open Font License, the same files the Console ships.
+- Sizes, all tokens: page title `--fs-xl` (28 px), `--fs-title` (40 px) from
+  768 px; body `--fs-read` (17 px); search and answer headings `--fs-lg`
+  (20 px); snippets and chips `--fs-md` (16 px); labels and small text
+  `--fs-base` (14 px). Nothing smaller than 14 px, so the shared `--fs-sm`
+  and `--fs-xs` aren't used.
+- Weights: shared `--w-body` for body, 600 for links and tile names, 700 for
+  titles.
 
 ## Layout
 
-- One column, max width 1080 px, 16 px side padding on phones, 24 px from 768 px.
-- Spacing steps: 4, 8, 12, 16, 24, 32, 48.
-- Corners: 14 px on cards and inputs, 999 px on chips.
-- Shelf grid: 2 columns on phones, 3 from 640 px, 4 from 1000 px.
+- One column, max width `--read-max`, `--sp-4` side padding on phones,
+  `--sp-5` from 768 px.
+- Spacing steps: the shared `--sp-1` to `--sp-6` (4 to 32 px) and `--sp-7`.
+- Corners: the shared `--r-sm` / `--r-md` (2 px) on everything, and the
+  shared cut corner (`--cut`) on cards, tiles, quick answers and the hero.
+- Flat and opaque: no gradients, no blur, no shadows, no text on a picture.
+  Elevation is a 1 px line and a step in surface color.
+- Shelf grid: 2 columns on phones, 3 from 640 px.
 - A sticky top bar on every page except Home: back to Home, page name, theme button.
 
 ## Parts
 
-- **Hero (home only).** A wide photograph with a dark gradient over its lower
-  half, the name, one line of what it is, and the search box on top. Height
-  about 46% of a phone screen, 380 px on desktop.
-- **Search box.** 56 px tall, 19 px text, amber button. Focus ring is a 2 px amber line.
+- **Hero (home only).** The photograph as a band across the top, then the
+  name, one line of what it is and the search box on an opaque panel under
+  it. The theme button sits on its own panel at the top right.
+- **Search box.** 56 px tall, `--fs-lg` text, accent button. Focus is a 2 px
+  `--focus` line.
 - **Chips.** Common questions as one-tap searches. 44 px tall, wrap on phones.
 - **Shelf tile.** Picture on top (3:2), name, one line of what's inside. The
   whole tile is the link. A shelf with no books loaded yet is shown dimmed
   with "Not loaded".
-- **Quick answer card.** Amber border, label "Quick answer", the question as
-  a heading, steps as a list, then the source in small text.
+- **Quick answer card.** `--accent-line` border with a 2 px accent rail on
+  the left, label "Quick answer", the question as a heading, steps as a
+  list, then the source in small text.
 - **Result row.** Title, two lines of snippet, the book it came from.
 - **Notice.** A plain bordered box for things like "No books loaded yet".
-- **Danger box.** `--danger` border and label, used only for things that can hurt you.
+- **Danger box.** The shared "high" status colors with a red rail and its
+  label, used only for things that can hurt you.
 
 ## Pictures
 
@@ -123,7 +160,8 @@ No icon fonts.
 
 - Any request to another host (fonts, scripts, images, maps, trackers).
 - Pure white backgrounds in the Dark or Night themes.
-- Text over a picture without the dark gradient behind it.
+- Text over a picture. Gradients, blur, glows and shadows.
+- Raw colors, font sizes or radii in `app.css` (use a token).
 - Light grey text on dark grey below the contrast floor.
 - Skulls, gas masks, weapons, camouflage, biohazard signs, flames-as-decoration.
 - Emoji as icons.
