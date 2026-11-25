@@ -25,7 +25,7 @@ ahead of time:
 - **Your own files**: music, films and documents you put in the `files/` folder, played in the page.
 - **Add-on layers**: your own pages and home-page cards (a stock list, local maps, a printed
   sheet) kept in a private folder of your own. See [docs/layers.md](docs/layers.md).
-- Three themes: Dark, Day, and a red Night theme that keeps your night vision.
+- Three themes: Dark and Light (the shared Jaxson Pierce Solutions look) and a red Night theme that keeps your night vision.
 
 It serves pages to `127.0.0.1` only. Nothing on the page loads from the
 internet, and a test fails if anything tries.

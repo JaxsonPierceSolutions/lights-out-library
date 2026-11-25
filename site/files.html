@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0c0e11">
+<meta name="theme-color" content="#03070b">
 <title>Your own files · Lights Out Library</title>
 <script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/lightsout-tokens.css">
 <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
@@ -15,7 +17,7 @@
     <h1 id="title">Your own files</h1>
     <p class="lede" id="lede">Music, films and documents you added yourself. Press one to play or open it.</p>
   </header>
-  <div class="chips" id="dirs" aria-label="Folders"></div>
+  <div class="chips" id="dirs" role="group" aria-label="Folders"></div>
   <div id="player" class="player" hidden></div>
   <div id="out"><p class="muted">Looking for files…</p></div>
   <div class="notice" id="how" hidden><b class="tag">How to add files</b>

@@ -1,0 +1,101 @@
+/* Shared JPS design tokens, vendored from the JPS Console.
+   Source: JaxsonPierceSolutions/jps-console, src/jps_console/static/tokens.css
+   Commit: 61ad51fb726cde8c97b70e5cfc7f5e03f36acf72
+   SHA-256 of the source file: d40fc50e09b1b17f82727a2e73a8683a87a5bdd95deb953ec09d1992511efcfb
+   Changed on copy: the two font paths only (fonts/ becomes ../fonts/).
+   Update with scripts/sync_tokens.py; never edit by hand. Lights Out additions are in
+   lightsout-tokens.css. Values from IBM Carbon are used under Apache-2.0 (see NOTICE). */
+/* --- copied from jps-console below this line; do not edit --- */
+/* JPS Console design tokens. The ONLY file where a color, size, radius or shadow is written.
+   app.css uses var(--...) only; tests/test_style_gate.py fails the build otherwise.
+   Structure modeled on IBM Carbon (layers, borders, support colors, data-table sizes, focus), and the
+   light theme's grays and status colors come from Carbon's g10 theme (@carbon/themes 11.85.0,
+   Apache-2.0, (c) IBM Corp.). See docs/decisions/0008-tokens-modeled-on-carbon.md.
+   Every surface is opaque, so tests/test_contrast.py can check each pair exactly. */
+@font-face { font-family: "Geist"; font-weight: 100 900; font-display: swap; src: url("../fonts/geist-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Geist Mono"; font-weight: 100 900; font-display: swap; src: url("../fonts/geist-mono-latin-wght-normal.woff2") format("woff2"); }
+
+/* Dark, the default (decision 3): a near-black canvas, opaque panels and one cyan signal. */
+:root {
+  color-scheme: dark;
+  /* Layers: canvas, then panels, then raised parts (table headers, inputs, hover). */
+  --bg: #03070b; --surface: #08121a; --surface-solid: #08121a; --surface-2: #0e1c27; --surface-3: #142531;
+  --text: #e2f0f7; --muted: #8ea6b5;
+  /* --line separates; --line-strong outlines a control and contrasts 3:1 with the panel. */
+  --line: #1b2d39; --line-strong: #4f7083;
+  --accent: #3cd2ff; --on-accent: #02121b; --accent-soft: #0a2836; --accent-line: #2a7c9a; --focus: #3cd2ff;
+  /* Status. -fg is text on -bg; -mark is a rail, tile line or chart mark (3:1 on the panel). */
+  --high: #ff8389; --high-bg: #2a1014; --high-line: #7a2a31; --mark-bad: #fa4d56;
+  --med: #ffb784; --med-bg: #2b1809; --med-line: #7a4520; --mark-warn: #ff832b;
+  --low: #f1c21b; --low-bg: #262005; --low-line: #6b5710; --mark-low: #d2a106;
+  --ok: #6fdc8c; --ok-bg: #0b2414; --ok-line: #1f6b38; --mark-good: #42be65;
+  --neutral: #c1cdd6; --neutral-bg: #17222b; --neutral-line: #3c4d5a; --mark-neutral: #8d9ba6;
+  --mark-info: #3cd2ff; --track: #142531;
+  /* Source view: dark in both themes, as code editors usually are. */
+  --code-bg: #02060a; --code-head: #07111a; --code-text: #d8e9f2; --code-muted: #87a0b0; --code-line: #142634;
+  --code-high: #3d1a26; --code-high-text: #ffb3b9; --code-med: #392a10; --code-med-text: #f2c878; --code-target: #0f3348;
+}
+
+/* Light: picked by the user (Dark / Light in the account panel). Carbon g10 grays, cyan kept as the signal. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f4f4; --surface: #ffffff; --surface-solid: #ffffff; --surface-2: #f4f4f4; --surface-3: #e8e8e8;
+  --text: #161616; --muted: #525252;
+  --line: #e0e0e0; --line-strong: #8d8d8d;
+  --accent: #00539a; --on-accent: #ffffff; --accent-soft: #e5f6ff; --accent-line: #82cfff; --focus: #0072c3;
+  --high: #a2191f; --high-bg: #fff1f1; --high-line: #ffb3b8; --mark-bad: #da1e28;
+  --med: #8a3800; --med-bg: #fff2e8; --med-line: #ffb784; --mark-warn: #ba4e00;
+  --low: #684e00; --low-bg: #fcf4d6; --low-line: #e2c45b; --mark-low: #8e6a00;
+  --ok: #0e6027; --ok-bg: #defbe6; --ok-line: #a7f0ba; --mark-good: #198038;
+  --neutral: #525252; --neutral-bg: #f2f4f8; --neutral-line: #c6c6c6; --mark-neutral: #6f6f6f;
+  --mark-info: #0072c3; --track: #e8e8e8;
+}
+
+/* Paper is always the light theme. Keep this block identical to the light one (a test checks). */
+@media print {
+  :root, :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f4f4f4; --surface: #ffffff; --surface-solid: #ffffff; --surface-2: #f4f4f4; --surface-3: #e8e8e8;
+    --text: #161616; --muted: #525252;
+    --line: #e0e0e0; --line-strong: #8d8d8d;
+    --accent: #00539a; --on-accent: #ffffff; --accent-soft: #e5f6ff; --accent-line: #82cfff; --focus: #0072c3;
+    --high: #a2191f; --high-bg: #fff1f1; --high-line: #ffb3b8; --mark-bad: #da1e28;
+    --med: #8a3800; --med-bg: #fff2e8; --med-line: #ffb784; --mark-warn: #ba4e00;
+    --low: #684e00; --low-bg: #fcf4d6; --low-line: #e2c45b; --mark-low: #8e6a00;
+    --ok: #0e6027; --ok-bg: #defbe6; --ok-line: #a7f0ba; --mark-good: #198038;
+    --neutral: #525252; --neutral-bg: #f2f4f8; --neutral-line: #c6c6c6; --mark-neutral: #6f6f6f;
+    --mark-info: #0072c3; --track: #e8e8e8;
+  }
+}
+
+/* Everything that isn't a color is the same in both themes. */
+:root {
+  /* Semantic status, one name per meaning. Each is always shown with a word (COMPONENTS.md, Status tag). */
+  --cat1-fg: var(--high); --cat1-bg: var(--high-bg); --cat1-line: var(--high-line); --cat1-mark: var(--mark-bad);
+  --cat2-fg: var(--med); --cat2-bg: var(--med-bg); --cat2-line: var(--med-line); --cat2-mark: var(--mark-warn);
+  --cat3-fg: var(--low); --cat3-bg: var(--low-bg); --cat3-line: var(--low-line); --cat3-mark: var(--mark-low);
+  --fail-fg: var(--high); --fail-bg: var(--high-bg); --fail-line: var(--high-line); --fail-mark: var(--mark-bad);
+  --pass-fg: var(--ok); --pass-bg: var(--ok-bg); --pass-line: var(--ok-line); --pass-mark: var(--mark-good);
+  --nr-fg: var(--neutral); --nr-bg: var(--neutral-bg); --nr-line: var(--neutral-line); --nr-mark: var(--mark-neutral);
+
+  /* Type. Every on-screen font-size is one of these. */
+  --sans: "Geist", "Segoe UI", system-ui, -apple-system, Roboto, "Liberation Sans", Arial, sans-serif;
+  --mono: "Geist Mono", Consolas, "SF Mono", Menlo, "Liberation Mono", monospace;
+  --w-body: 370; /* Light text on dark reads heavier than the same weight on white. */
+  --fs-xs: 11px; --fs-sm: 12.5px; --fs-base: 14px; --fs-md: 16px; --fs-lg: 20px; --fs-xl: 28px; --fs-num: 48px;
+  --fs-print-xs: 9px; --fs-print-sm: 10px; --fs-print: 11px; --fs-print-base: 12px; --fs-print-h: 20px;
+  --banner-h: 28px;
+
+  /* Space, on a 4px grid. */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+
+  /* Shape. Small radii only; the cut corner is the one signature. Nothing casts a shadow. */
+  --r-sm: 2px; --r-md: 2px; --r-lg: 2px; --r-round: 50%; --cut: 12px;
+  --shadow: none;
+  --rail: 2px; --focus-width: 2px;
+
+  /* Density (Carbon data table: 32 small, 40 medium). */
+  --row-h: 36px; --row-h-compact: 32px; --control-h: 32px; --sidebar-w: 228px; --page-max: 1600px;
+
+  --ease: cubic-bezier(.2,.7,.2,1);
+}

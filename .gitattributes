@@ -1,2 +1,4 @@
 *.cmd text eol=crlf
 *.sh text eol=lf
+tests/vendor/axe.min.js -text
+tests/vendor/** export-ignore

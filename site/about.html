@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0c0e11">
+<meta name="theme-color" content="#03070b">
 <title>About · Lights Out Library</title>
 <script src="/js/theme.js"></script>
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/lightsout-tokens.css">
 <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
@@ -22,19 +24,19 @@
 
   <h2>The sets</h2>
   <p>Each set includes the ones above it. Everything, with the optional AI, stays under <span id="limit">500</span> GB.</p>
-  <div class="scroll"><table id="tiers"><thead><tr><th>Set</th><th>Size</th><th>Books</th><th>What it adds</th></tr></thead><tbody></tbody></table></div>
+  <div class="scroll" tabindex="0" role="region" aria-label="Sets"><table id="tiers"><thead><tr><th>Set</th><th>Size</th><th>Books</th><th>What it adds</th></tr></thead><tbody></tbody></table></div>
   <p class="small muted" style="margin-top:12px">To add a set, run <code>fetch --tier NAME</code> in the project folder while you have internet, then start the library again. <code>fetch --list</code> shows the same table. Sizes were checked on <span id="checked"></span>.</p>
 
   <h2>Every book, its size and its license</h2>
   <p>This project ships none of these books. Each person downloads their own copy, and each book stays under its own license. "Not confirmed" means we could not find a clear statement, so do not copy or sell that book.</p>
-  <div class="scroll"><table id="items"><thead><tr><th>Book</th><th>Set</th><th>Size</th><th>License</th><th></th></tr></thead><tbody></tbody></table></div>
+  <div class="scroll" tabindex="0" role="region" aria-label="Every book"><table id="items"><thead><tr><th>Book</th><th>Set</th><th>Size</th><th>License</th><th></th></tr></thead><tbody></tbody></table></div>
 
   <h2>Left out on purpose</h2>
   <div id="left"></div>
 
   <h2 id="ask">Ask (optional AI)</h2>
   <p>Ask is off unless you turn it on. It uses a small AI model that runs on this computer through a free program called Ollama, which you install yourself. It reads pages from the library and answers from them. It can be wrong, and it is slow on a laptop without a graphics card.</p>
-  <div class="scroll"><table id="models"><thead><tr><th>Model</th><th>Made by</th><th>License</th><th>Size</th><th>Tried here</th></tr></thead><tbody></tbody></table></div>
+  <div class="scroll" tabindex="0" role="region" aria-label="AI models"><table id="models"><thead><tr><th>Model</th><th>Made by</th><th>License</th><th>Size</th><th>Tried here</th></tr></thead><tbody></tbody></table></div>
   <p class="small muted" style="margin-top:12px">To turn it on: install Ollama, run <code>ollama pull</code> for one model above and for <code id="embed"></code>, then copy <code>config.example.json</code> to <code>config.json</code> and set <code>ask.enabled</code> to true and <code>ask.model</code> to the model's name.</p>
 
   <h2>Fonts and software</h2>

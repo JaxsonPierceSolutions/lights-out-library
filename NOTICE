@@ -6,3 +6,12 @@ pictures in this repository. It does not cover the books the fetch script
 downloads, which belong to their owners under their own licenses (see
 docs/licenses.md), or the bundled Geist fonts (SIL Open Font License, see
 site/fonts/LICENSE-Geist.txt).
+
+The design tokens in site/css/tokens.css are copied from the JPS Console
+(see the file's header) and are covered by this license. Some of their
+values (the light theme's grays and status colors) come from IBM Carbon,
+@carbon/themes 11.85.0, Copyright IBM Corp., under the Apache License 2.0.
+
+tests/vendor/axe.min.js is axe-core 4.14.0 by Deque Systems, under the
+Mozilla Public License 2.0 (tests/vendor/LICENSE-axe-core.txt). It is used
+only by the tests and is not part of the library or its release zip.
